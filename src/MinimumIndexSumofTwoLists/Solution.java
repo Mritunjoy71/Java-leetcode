@@ -5,26 +5,24 @@ import java.util.*;
 class Solution {
     public String[] findRestaurant(String[] list1, String[] list2) {
         HashMap<String, Integer> hashMap = new HashMap<>();
-        HashMap<String, Integer> commonMap = new HashMap<>();
+        List<String> list = new ArrayList<>();
         for (int i = 0; i < list1.length; i++) {
             hashMap.put(list1[i], i);
         }
         int minSum = Integer.MAX_VALUE;
         for (int i = 0; i < list2.length; i++) {
             if (hashMap.get(list2[i]) != null) {
-                if (hashMap.get(list2[i]) + i <= minSum) {
+                if (hashMap.get(list2[i]) + i < minSum) {
                     minSum = Math.min(minSum, hashMap.get(list2[i]) + i);
-                    commonMap.put(list2[i], hashMap.get(list2[i]) + i);
+                    list.clear();
+                    list.add(list2[i]);
+                }else if (hashMap.get(list2[i]) + i == minSum){
+                    list.add(list2[i]);
                 }
             }
         }
 
-        List<String> answerList = new ArrayList<>();
-        for (String key:commonMap.keySet())
-            if (commonMap.get(key)==minSum){
-                answerList.add(key);
-            }
-        return answerList.toArray(new String[0]);
+        return list.toArray(new String[0]);
 
     }
 
